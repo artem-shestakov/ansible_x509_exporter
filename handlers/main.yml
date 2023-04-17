@@ -1,0 +1,9 @@
+---
+- name: Restart x509_exporter
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: true
+    enabled: true
+    name: x509_certificate_exporter.service
+    state: restarted
+  listen: restart

@@ -1,0 +1,15 @@
+[Unit]
+Description=X.509 Certificate Exporter
+Documentation=https://github.com/enix/x509-certificate-exporter
+After=network.target
+
+[Service]
+User={{ x509_exporter_user }}
+EnvironmentFile={{ x509_exporter_config_file }}
+ExecStart={{ x509_exporter_dist_dir }}/x509-certificate-exporter $FLAGS
+
+SyslogIdentifier=x509_certificate_exporter
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

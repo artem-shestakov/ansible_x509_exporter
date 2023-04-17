@@ -1,0 +1,9 @@
+---
+- name: Install x509 exporter
+  ansible.builtin.import_tasks: install.yml
+
+- name: Create config of x509 exporter
+  ansible.builtin.import_tasks: config.yml
+
+- name: Systemd configuration of x509 exporter
+  ansible.builtin.import_tasks: systemd.yml

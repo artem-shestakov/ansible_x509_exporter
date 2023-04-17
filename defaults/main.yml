@@ -1,0 +1,14 @@
+---
+x509_exporter_version: "3.6.0"
+x509_exporter_url: "https://github.com/enix/x509-certificate-exporter/\
+  releases/download/v{{ x509_exporter_version }}/\
+  x509-certificate-exporter-linux-amd64.tar.gz"
+
+x509_exporter_dist_dir: "/usr/local/bin"
+x509_exporter_config_file: /etc/default/x509_exporter
+
+x509_exporter_user: prometheus
+
+x509_exporter_address: "0.0.0.0"
+x509_exporter_port: 9793
+x509_exporter_flags: []

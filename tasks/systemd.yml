@@ -1,0 +1,11 @@
+---
+- name: X509_exporter | create systemd service
+  become: true
+  ansible.builtin.template:
+    src: "x509_certificate_exporter.systemd.j2"
+    dest: "/etc/systemd/system/x509_certificate_exporter.service"
+    owner: root
+    group: root
+    mode: "u=rw,go=r"
+  notify:
+    - restart

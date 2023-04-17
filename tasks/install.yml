@@ -1,0 +1,44 @@
+---
+- name: X509_exporter | create user
+  become: true
+  ansible.builtin.user:
+    name: "{{ x509_exporter_user }}"
+    comment: "x509_exporter user"
+    createhome: false
+    move_home: false
+    shell: /bin/false
+    state: present
+    system: true
+  when: x509_exporter_user is defined and x509_exporter_user != 'postgres'
+
+- name: X509_exporter | download exporter
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ x509_exporter_url }}"
+    dest: "/tmp/x509_exporter-{{ x509_exporter_version }}.linux-amd64.tar.gz"
+    mode: '0644'
+
+- name: "X509_exporter | Create tmp directory for exporter"
+  ansible.builtin.file:
+    path: "/tmp/x509_exporter-{{ x509_exporter_version }}"
+    state: directory
+    owner: "{{ x509_exporter_user }}"
+    mode: "0755"
+    recurse: true
+
+- name: X509_exporter | unarchive x509_exporter
+  become: true
+  ansible.builtin.unarchive:
+    src: "/tmp/x509_exporter-{{ x509_exporter_version }}.linux-amd64.tar.gz"
+    dest: "/tmp/x509_exporter-{{ x509_exporter_version }}"
+    owner: "{{ x509_exporter_user }}"
+    remote_src: true
+
+- name: "X509_exporter | Copy binary to {{ x509_exporter_dist_dir }}"
+  become: true
+  ansible.builtin.copy:
+    src: "/tmp/x509_exporter-{{ x509_exporter_version }}\
+      /x509-certificate-exporter"
+    dest: "{{ x509_exporter_dist_dir }}"
+    mode: u+x,g+x,o+x
+    remote_src: true

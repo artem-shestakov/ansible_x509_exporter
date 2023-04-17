@@ -1,0 +1,10 @@
+---
+- name: X509_exporter | create config file
+  become: true
+  ansible.builtin.template:
+    src: "x509_exporter.default.conf.j2"
+    dest: "{{ x509_exporter_config_file }}"
+    owner: root
+    group: root
+    mode: "0640"
+  notify: restart
