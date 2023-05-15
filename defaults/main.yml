@@ -10,5 +10,5 @@ x509_exporter_config_file: /etc/default/x509_exporter
 x509_exporter_user: prometheus
 
 x509_exporter_address: "0.0.0.0"
-x509_exporter_port: 9793
+x509_exporter_port: "9793"
 x509_exporter_flags: []
