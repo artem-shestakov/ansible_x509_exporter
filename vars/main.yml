@@ -1,1 +1,0 @@
-_x509_exporter_flags: "{{ '--listen-address=' + x509_exporter_address + ':' + x509_exporter_port + ' ' + x509_exporter_flags | join('') if '--listen-address' not in x509_exporter_flags else x509_exporter_flags | join('') }}"

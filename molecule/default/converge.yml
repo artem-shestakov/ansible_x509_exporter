@@ -3,6 +3,3 @@
   hosts: all
   roles:
     - role: ansible_x509_exporter
-  vars:
-    x509_exporter_flags:
-      - --listen-address=0.0.0.0:9794

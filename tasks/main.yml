@@ -7,3 +7,9 @@
 
 - name: Systemd configuration of x509 exporter
   ansible.builtin.import_tasks: systemd.yml
+
+- name: Check if need to restart
+  stat: path=/tmp/x509.restart
+  register: x509_restart
+  changed_when: x509_restart.stat.exists
+  notify: Restart

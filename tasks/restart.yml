@@ -1,0 +1,25 @@
+---
+- name: Restart x509_exporter
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: true
+    enabled: true
+    name: x509_certificate_exporter.service
+    state: restarted
+
+- name: Delete restart flag
+  become: true
+  ansible.builtin.file:
+    path: /tmp/x509.restart
+    state: absent
+
+- name: Waiting for exporter to come online
+  ansible.builtin.uri:
+    method: GET
+    url: http://{{ x509_exporter_address }}:{{ x509_exporter_port }}/metrics
+    status_code:
+      - 200
+  register: status
+  until: status.status == 200
+  retries: 10
+  delay: 5

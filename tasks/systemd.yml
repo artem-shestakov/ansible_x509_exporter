@@ -1,4 +1,11 @@
 ---
+- name: Create restart flag
+  become: true
+  ansible.builtin.file:
+    path: /tmp/x509.restart
+    state: touch
+  changed_when: false
+
 - name: X509_exporter | create systemd service
   become: true
   ansible.builtin.template:
@@ -7,5 +14,14 @@
     owner: root
     group: root
     mode: "u=rw,go=r"
+  register: systemd
   notify:
-    - restart
+    - Restart
+
+- name: Delete restart flag
+  become: true
+  ansible.builtin.file:
+    path: /tmp/x509.restart
+    state: absent
+  when: not systemd.changed
+  changed_when: false
